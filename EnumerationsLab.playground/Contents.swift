@@ -5,15 +5,26 @@ import UIKit
 // a. Define an enumeration called iOSDeviceType with member values iPhone, iPad, iWatch. Create a variable called myiPad and assign it to .iPad.
 
 // Your code here
-
+enum iOSDeviceType {
+    case iPhone
+    case iPad
+    case iWatch
+    
+}
+let myiPad = iOSDeviceType.iPad
 // Uncomment the lines below to test your solution
 
-//let myiPad = iOSDeviceType.iPad
-//assert(myiPad == .iPad)
+assert(myiPad == .iPad)
 
 // b. Adjust your code above so that iPhone and iPad have associated values of type String which represents the model number.  Create an instance of a .iPhone("8+") and assign it to a variable called myPhone
 
 // Your code here
+enum iOSDeviceType2 {
+    case iPhone(String)
+    case iPad(String)
+    case iWatch
+}
+var myPhone = iOSDeviceType2.iPhone("8+")
 
 // Uncomment the lines below to test your solution
 
@@ -40,15 +51,33 @@ enum Step {
 }
 
 // Your function here
+//X
+func getPosition(startingAt:(Int, Int), afterSteps: [Step]) -> (Int, Int) {
+    var finalLocation = (startingAt.0,startingAt.1)
+    for currentSteps in afterSteps{
+        switch currentSteps {
+        case Step.up:
+            finalLocation.1 += 1
+        case Step.down:
+            finalLocation.1 -= 1
+        case Step.left:
+            finalLocation.0 -= 1
+        case Step.right:
+            finalLocation.0 += 1
+        }
+        
+    }
+    return finalLocation
+}
 
 // Uncomment the lines below to test your solution
 
-//let startingLocation = (x: 0, y: 0)
-//let steps: [Step] = [.up, .up, .left, .down, .left]
-//let expectedEndPosition = (x: -2, y: 1)
-//let endPosition = getPosition(startingAt: startingLocation, afterSteps: steps)
-//
-//assert(endPosition == expectedEndPosition, "Was expecting \(expectedEndPosition) but got \(endPosition)")
+let startingLocation = (x: 0, y: 0)
+let steps: [Step] = [.up, .up, .left, .down, .left]
+let expectedEndPosition = (x: -2, y: 1)
+let endPosition = getPosition(startingAt: startingLocation, afterSteps: steps)
+
+assert(endPosition == expectedEndPosition, "Was expecting \(expectedEndPosition) but got \(endPosition)")
 
 // Question Three
 
@@ -62,21 +91,45 @@ enum Coin: Int {
 }
 
 // Your function here
+// from = internal name
+//labeling your data type the data type are Int and Coin
+func getTotalValue(from tuples: [(numberOfCoins: Int, typeOfCoin: Coin)]) -> Int {
+    // creating a var so we can create a return
+    var totalNumberOfCent = 0
+    // for tuples in the collection of tuples
+    for tuple in tuples {
+        // we are interested in changing the number not the coin ?
+        switch tuple.typeOfCoin {
+        case .penny:
+            totalNumberOfCent += Coin.penny.rawValue * tuple.numberOfCoins
+        case .nickle:
+            totalNumberOfCent += Coin.nickle.rawValue * tuple.numberOfCoins
+        case .dime:
+            totalNumberOfCent += Coin.dime.rawValue * tuple.numberOfCoins
+        case .quarter:
+            totalNumberOfCent += Coin.quarter.rawValue * tuple.numberOfCoins
+            
+        // what does rawValue mean what does it do ??
+            
+        }
+    }
+    return totalNumberOfCent
+}
 
 // Uncomment the lines below to test your solution
 
-//let coinArr: [(Int, Coin)] = [
-//    (10, .penny),
-//    (15, .nickle),
-//    (3, .quarter),
-//    (20, .penny),
-//    (3, .dime),
-//    (7, .quarter)
-//]
-//
-//let expectedTotal = 385
-//let total = getTotalValue(from: coinArr)
-//assert(total == expectedTotal, "Was expecting \(expectedTotal), but got \(total)")
+let coinArr: [(Int, Coin)] = [
+    (10, .penny),
+    (15, .nickle),
+    (3, .quarter),
+    (20, .penny),
+    (3, .dime),
+    (7, .quarter)
+]
+
+let expectedTotal = 385
+let total = getTotalValue(from: coinArr)
+assert(total == expectedTotal, "Was expecting \(expectedTotal), but got \(total)")
 
 // Question Four
 
@@ -84,6 +137,28 @@ enum Coin: Int {
 // Write a method inside Day that returns whether or not it is a weekday (Monday - Friday)
 
 // Your code here
+
+enum Day: String {
+    case monday = "monday"
+    case tuesday = "tuesday"
+    case wednesday = "wednesday"
+    case thursday = "thursday"
+    case friday = "friday"
+    case saturday = "saturday"
+    case sunday = "sunday"
+    
+    func isWeekday () -> Bool { // how to set it to lowercased
+        var conditionWeekday = false
+        
+        switch self {
+        case .monday, .tuesday, .wednesday, .thursday, .friday:
+            conditionWeekday = true
+            return conditionWeekday
+        case .saturday, .sunday:
+            return conditionWeekday
+        }
+    }
+}
 
 // Uncomment the lines below to test your solution
 
